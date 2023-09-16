@@ -1,0 +1,69 @@
+<configuration>
+
+	<!-- Variables -->
+	<timestamp key="LogDate" datePattern="dd-MM-yyyy" />
+
+	<!-- Logger Root -->
+	<root level="debug">
+
+		<appender-ref ref="salidaFicheroRolling" />
+
+	</root>
+
+	<!-- Formato de Salida por Consola -->
+
+	<!-- La única manera que he logrado que todo salga en la consola sin ningún 
+		warning, ha sido escribiendo este appender sin añadir el appender-ref al 
+		root -->
+
+	<!-- Usando la clase NTTLayout con todos los pasos del vídeo, me daba error 
+		directamente, por eso he optado por no usarla. (creo que el error ha sido 
+		debido a la versión, pero si la cambiaba de la que tengo puesta, daba error 
+		también. Esta ha sido la mejor configuración que he probado y la única que 
+		no me ha dado fallos) -->
+
+	<appender name="consola" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-4level %logger{32} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	
+	<!-- Salida por Fichero Rolling -->
+		<appender name="salidaFicheroRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	
+			<!-- Ruta y Nombre del Fichero -->
+			<file>./logs/log-avl-05-05-2023.log</file>
+	
+			<!-- Política de Tratamiento del Fichero -->
+			<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>./logs/log-avl-05-05-2023.%i.zip</fileNamePattern>
+	        
+	        <!-- Cantidad de Ficheros Posibles  -->
+	        <minIndex>1</minIndex>
+	        <maxIndex>3</maxIndex>
+	        
+			
+			
+			</rollingPolicy>
+			
+			<!-- Cada cuanto cambia el fichero -->
+			<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+				<maxFileSize>50KB</maxFileSize>
+			</triggeringPolicy>
+	
+	
+			<!-- Formato de Salida del fichero -->
+			<encoder>
+				<pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-4level %logger{32}-[%method]-%msg%n</pattern>
+			</encoder>
+		</appender>	
+	
+
+
+
+
+
+
+
+</configuration> 
